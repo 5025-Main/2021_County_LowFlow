@@ -50,7 +50,10 @@ for Rain_gauge_name in Rain_gauge_names:
     site_df = pd.DataFrame()
     try:
         ## Verify rain gauge name
-        url = 'https://sandiego.onerain.com/sensor.php?time_zone=US%2FPacific&site_id='+RG_ID+'&site='+RG_SERIAL+'&device_id='+RG_DEV_ID+'&device='+RG_DEV_SERIAL+'&bin='+time_bin+'&range=Custom+Range&legend=true&thresholds=true&refresh=off&show_raw=true&show_quality=true&data_start='+start_date+'+00%3A00%3A00&data_end='+end_date+'+23%3A59%3A59'
+        url = 'https://sandiego.onerain.com/sensor.php?time_zone=US%2FPacific&site_id='+RG_ID+'&site='+RG_SERIAL+'&device_id='+RG_DEV_ID+'&device='+RG_DEV_SERIAL+        '&bin='+time_bin+'&range=Custom+Range&legend=true&thresholds=true&refresh=off&show_raw=true&show_quality=true        &data_start='+start_date+'+00%3A00%3A00&data_end='+end_date+'+23%3A59%3A59'
+        
+        
+        url = 'https://sandiego.onerain.com/sensor/?        time_zone=US%2FPacific&site_id='+RG_ID+'&site='+RG_SERIAL+'&device_id='+RG_DEV_ID+'&device='+RG_DEV_SERIAL+'        &data_start='+start_date+'%2000%3A00%3A00&data_end='+end_date+'%2023%3A59%3A59        &bin=86400&range=Custom%20Range&markers=false&legend=true&thresholds=true&refresh=off&show_raw=true&show_quality=true'
         
         s = requests.get(url).content
         
@@ -81,25 +84,28 @@ for Rain_gauge_name in Rain_gauge_names:
                     #for h4_tag in soup.findAll('h4',{'class':'status-inline list-group-item-heading'}):
                     #    print(h4_tag)
                     for h4_tag in soup.findAll('li',{'class':'list-group-item'}):
-                        print (h4_tag)
+                        #print ()
+                        #print('tag')
+                        #print (h4_tag)
                         try:
                             datetime =  h4_tag.find('span', {'class':'text-nowrap'}).text
                             #print datetime
                             times.append(datetime)
                         except:
-                           print ('Failed')
-                           print (h4_tag)
-                           print ()
+                           #print ('datetime Failed')
+                           #print (h4_tag)
+                           #print ()
                            pass
                     ## Get rain data
                     #for h4_tag in soup.findAll('h4',{'class':'list-group-item-heading'}):
                         
                         try:
-                            rain_val =  h4_tag.text.split('&nbsp;')[0]
+                            #rain_val =  h4_tag.text.split('&nbsp;')[0]
+                            rain_val = float(h4_tag.findAll('h4', {'class':'list-group-item-heading'})[1].text.split(u'\xa0')[0].strip('\r\n'))
                             #print rain_val
                             rain_vals.append(float(rain_val))
                         except:
-                           print ('Failed')
+                           print ('rain_Val Failed')
                            print (h4_tag)
                            print ()
                            pass
@@ -168,7 +174,7 @@ fig, ax = plt.subplots(1,1,figsize=(12,8))
 
 for rainfile in rain_files:
     print ('')
-    print 'Precip file: '+rainfile
+    print ('Precip file: '+rainfile)
     rain = pd.read_csv(raindir+rainfile,index_col=0)
     rain.index = pd.to_datetime(rain.index)
     ## Resample to regular interval and fill non-data with zeros
