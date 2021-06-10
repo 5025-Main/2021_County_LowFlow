@@ -166,9 +166,9 @@ raindir = maindir+'Rain_data/'
 #for all gauges
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True]
 #for one gauge
-#gauge_name = 'Flinn_Springs'
-#rainfiles = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True]
-#rainfiles = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
+gauge_name = 'Rancho Bernardo'
+rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True and f.startswith(gauge_name)==True]
+#rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 
 fig, ax = plt.subplots(1,1,figsize=(12,8))
 
