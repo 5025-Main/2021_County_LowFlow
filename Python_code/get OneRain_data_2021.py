@@ -166,7 +166,7 @@ raindir = maindir+'Rain_data/'
 #for all gauges
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True]
 #for one gauge
-gauge_name = 'Deer Springs'
+gauge_name = 'Roads Div I'
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True and f.startswith(gauge_name)==True]
 #rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 
