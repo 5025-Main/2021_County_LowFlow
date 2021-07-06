@@ -25,9 +25,12 @@ Rain_gauge_info = pd.DataFrame.from_csv(maindir+'Ancillary_files/Rain_gauge_info
 Rain_gauge_names = Rain_gauge_info.index.unique()
 
 
+## Run this block to get the current month's data. then manually move it to "Month rain data" folder
+## Block below will go through all folders and combine monthly rainfall data
+
 ######### UPDATE HERE ###################
 #start_date, end_date = '2021-05-01', '2020-06-29' 
-start_date, end_date = '2021-05-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
+start_date, end_date = '2021-06-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
 time_bin  = '3600' #seconds. Daily=86400, Hourly=3600
 #######################################
 
@@ -130,31 +133,30 @@ for Rain_gauge_name in Rain_gauge_names:
 #%%combine mutiple files
 
 
-#Script expects the old files to be in a folder in the Raw data directory within the "0 - Rain Data". 
-#Place newly downloaded rain data in a second folder in the same Raw data directory.
+#Script expects the old files to be in a folder for that month
+#Place newly downloaded rain data in a second folder in the same directory for that month
 #The script will combine the files with the same names from each folder and output them to the raw data directory.
 
 raindir = maindir+'Rain_data/'
 
-for old_filename in os.listdir('C:/Users/alex.messina/Documents/GitHub/2020_County_LowFlow/Rain_data/May rain data'):
-    print old_filename
-    rain_panda = pd.DataFrame(columns=['Rain_in'])
-    for f in [x[0] for x in os.walk(raindir)]:
-        print f
+for current_fname in os.listdir('C:/Users/alex.messina/Documents/GitHub/2020_County_LowFlow/Rain_data/May rain data'):
+    print (current_fname)
+    rain_current = pd.DataFrame(columns=['Rain_in'])
+    for folder in [x[0] for x in os.walk(raindir)]:
+        print (folder)
         ## month file
         try:
-            old_file = pd.read_csv(f  +'/'+ old_filename, index_col = 0)
-            print(old_filename)
-            rain_panda = rain_panda.append(old_file)
+            rain_previous = pd.read_csv(folder  +'/'+ current_fname, index_col = 0)
+            rain_current = rain_current.append(rain_previous)
         except:
             pass
         
         
-    rain_panda['idx']=rain_panda.index
-    rain_panda = rain_panda.drop_duplicates(subset='idx')
-    rain_panda = rain_panda.sort_index()
-#    print(rain_panda)
-    rain_panda[['Rain_in']].to_csv(raindir+old_filename)
+    rain_current['idx']=rain_current.index
+    rain_current = rain_current.drop_duplicates(subset='idx')
+    rain_current = rain_current.sort_index()
+#    print (rain_current)
+    rain_current[['Rain_in']].to_csv(raindir+current_fname)
 
     
     
@@ -166,7 +168,7 @@ raindir = maindir+'Rain_data/'
 #for all gauges
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True]
 #for one gauge
-gauge_name = 'Roads Div I'
+gauge_name = 'Rancho Bernardo'
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True and f.startswith(gauge_name)==True]
 #rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 
