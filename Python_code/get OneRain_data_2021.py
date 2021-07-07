@@ -139,7 +139,7 @@ for Rain_gauge_name in Rain_gauge_names:
 
 raindir = maindir+'Rain_data/'
 
-for current_fname in os.listdir('C:/Users/alex.messina/Documents/GitHub/2020_County_LowFlow/Rain_data/May rain data'):
+for current_fname in os.listdir('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/Rain_data/May rain data'):
     print (current_fname)
     rain_current = pd.DataFrame(columns=['Rain_in'])
     for folder in [x[0] for x in os.walk(raindir)]:
@@ -166,10 +166,10 @@ for current_fname in os.listdir('C:/Users/alex.messina/Documents/GitHub/2020_Cou
 ## Data from  https://sandiego.onerain.com/rain.php
 raindir = maindir+'Rain_data/'
 #for all gauges
-rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True]
+rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 #for one gauge
-gauge_name = 'Rancho Bernardo'
-rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('daily.csv')==True and f.startswith(gauge_name)==True]
+gauge_name = 'Fallbrook'
+rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True and f.startswith(gauge_name)==True]
 #rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 
 fig, ax = plt.subplots(1,1,figsize=(12,8))
@@ -184,7 +184,7 @@ for rainfile in rain_files:
     
 
     ax.plot_date(rain.index, rain['Rain_in'],ls='steps-pre',marker='None',label=rainfile.split('_daily.csv')[0])
-    ax.xaxis.set_major_formatter(mpl.dates.DateFormatter('%m/%d/%Y'))
+    ax.xaxis.set_major_formatter(mpl.dates.DateFormatter('%m/%d/%Y %H:%M'))
     
     
     #rain_1D.to_csv(daily_rain_files+'Daily-'+rainfile.replace('.xls','.csv'))

@@ -10,11 +10,11 @@ import datetime as dt
 ## Image tools
 import matplotlib.image as mpimg
 from scipy import ndimage
-from PIL import Image
+#from PIL import Image
 import piexif
 
-site_name = 'SDG-085'
-pic_start_time = dt.datetime(2021,6,1,0,0)
+site_name = 'SWT-049'
+pic_start_time = dt.datetime(2021,6,4,10,0)
 
 maindir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/'
 ## Local file
@@ -58,7 +58,7 @@ for pic in [os.listdir(pic_dir+pic_folder)][0]:
 print ('datetimes and picture file names....DONE'   )
 # Limit to dates with water level
 pic_datetimes = pic_datetimes.sort_index()
-pic_datetimes = pic_datetimes.ix[WL.index[0]:WL.index[-1]]
+pic_datetimes = pic_datetimes.loc[WL.index[0]:WL.index[-1],:]
 
 # define your images to be plotted
 #pics = [os.listdir(pic_dir+pic_folder)][0][5000:] ## You can limit photos here
@@ -87,8 +87,8 @@ def key_event(e):
     t = dt.datetime.strptime(date_taken, '%Y:%m:%d %H:%M:%S')
     t_round5 = dt.datetime(t.year, t.month, t.day, t.hour,5*(t.minute // 5),0)
     ## Get flow and level data at time of pic
-    flow_at_image = WL.ix[t_round5,'Flow_gpm']
-    level_at_image = WL.ix[t_round5,'Level_in']
+    flow_at_image = WL.loc[t_round5,'Flow_gpm']
+    level_at_image = WL.loc[t_round5,'Level_in']
     ## Image
     ax1.cla()
     ax1.set_title('SITE: '+site_name+' Datetime: '+t.strftime('%m/%d/%y %H:%M') +' Pic: '+pics[curr_pos],color='w')
@@ -123,7 +123,7 @@ def key_event(e):
     ## Set plot limits
     ax2.set_xlim(t_round5 - dt.timedelta(hours=8), t_round5 + dt.timedelta(hours=8))
     ## Get flow data over a 24 hour surrounding period
-    flow_over_interval = WL.ix[t_round5 - dt.timedelta(hours=8):t_round5 + dt.timedelta(hours=8),'Flow_gpm']
+    flow_over_interval = WL.loc[t_round5 - dt.timedelta(hours=8):t_round5 + dt.timedelta(hours=8),'Flow_gpm']
     ## y limits
     try:
         if flow_over_interval.min() == 0. and flow_over_interval.max() > 0.:
@@ -159,8 +159,8 @@ if 5*(t.minute // 5)+5 == 60:
 else:
     t_round5 = dt.datetime(t.year, t.month, t.day, t.hour,5*(t.minute // 5)+5,0)
     
-flow_at_image = WL.ix[t_round5,'Flow_gpm']
-level_at_image = WL.ix[t_round5,'Level_in']
+flow_at_image = WL.loc[t_round5,'Flow_gpm']
+level_at_image = WL.loc[t_round5,'Level_in']
 
 ## Image
 #ax1 = fig1.axes[0]
