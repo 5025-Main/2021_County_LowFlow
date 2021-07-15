@@ -28,7 +28,7 @@ ex_cond_dat = ex_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetim
 
 ### START/END DATES
 today = dt.datetime.now()
-days_ago = today - dt.timedelta(days=2) ## get data from past 12 days
+days_ago = today - dt.timedelta(days=4) ## get data from past 12 days
 startdate = days_ago.strftime("%m-%d-%Y")
 enddate = today.strftime("%m-%d-%Y")
 
