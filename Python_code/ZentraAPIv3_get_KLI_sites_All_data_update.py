@@ -111,31 +111,17 @@ site_device_dict = {
                   'SDG-080':('06-02223',1),
                   'SDG-577':('06-02208',1),
                   'SDG-579':('06-02237',1),
-                  'SMG-015':('06-02225',1),
+                  'SMG-015':('06-02289',1),
+                  'SMG-021':('06-02225',1),
                   'SMG-062':('06-02236',3),
                   'SMG-062D':('06-02195',1),
                   'SMG-098':('06-02202',1)
                   }
 
                     
-device_site_dict= {
-                '06-02238':(['SDG-074'],1),
-                '06-02296':(['SDG-074F'],1),
-                '06-02284':(['SDG-074K'],1),
-                '06-02206':(['SDG-077'],1),
-                '06-02349':(['SDG-077E'],1),
-                '06-02223':(['SDG-080'],1),
-                '06-02208':(['SDG-577'],1),
-                '06-02237':(['SDG-579'],1),
-                '06-02225':(['SMG-015'],1),
-                '06-02236':(['SMG-062'],3),
-                '06-02195':(['SMG-062D'],1),
-                '06-02202':(['SMG-098'],1)
-                }
+# Reorder the dictionary    
+device_site_dict = {value[0]:([key],value[1]) for key, value in site_device_dict.items()}
 
-
-#device_site_dict= {
-#                '06-02192':(['CAR-059'],3)}
 
 
 
@@ -247,7 +233,7 @@ for col in ex_kli_cond_dat:
 
 #%%
     
-    ## Read in existing Wood data
+## Save updated Wood data
 all_level_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_1.csv')
 
 
