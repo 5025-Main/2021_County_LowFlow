@@ -15,31 +15,32 @@ import numpy as np
 startTime = dt.datetime.now()
 
 ## Read in existing Wood data
-all_level_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_1.csv',index_col=0, parse_dates=True)
+## inputdir is defined in the script that downloads Wood data, make sure to run that one first
+all_level_dat = pd.read_csv(inputdir+'Level_data_1.csv',index_col=0, parse_dates=True)
 all_level_dat = all_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-all_temp_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Temp_data_1.csv',index_col=0, parse_dates=True)
+all_temp_dat = pd.read_csv(inputdir+'Temp_data_1.csv',index_col=0, parse_dates=True)
 all_temp_dat = all_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-all_cond_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Cond_data_1.csv',index_col=0, parse_dates=True)
+all_cond_dat = pd.read_csv(inputdir+'Cond_data_1.csv',index_col=0, parse_dates=True)
 all_cond_dat = all_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
 #%%
 ## Read in existing KLI data
-ex_kli_level_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_KLI_1.csv',index_col=0, parse_dates=True)
+ex_kli_level_dat = pd.read_csv(inputdir+'Level_data_KLI_1.csv',index_col=0, parse_dates=True)
 ex_kli_level_dat = ex_kli_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-ex_kli_temp_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Temp_data_KLI_1.csv',index_col=0, parse_dates=True)
+ex_kli_temp_dat = pd.read_csv(inputdir+'Temp_data_KLI_1.csv',index_col=0, parse_dates=True)
 ex_kli_temp_dat = ex_kli_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-ex_kli_cond_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Cond_data_KLI_1.csv',index_col=0, parse_dates=True)
+ex_kli_cond_dat = pd.read_csv(inputdir+'Cond_data_KLI_1.csv',index_col=0, parse_dates=True)
 ex_kli_cond_dat = ex_kli_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
 #%%
 
 ### START/END DATES
 today = dt.datetime.now()
-days_ago = today - dt.timedelta(days=2) ## get data from past n days
+days_ago = today - dt.timedelta(days=6) ## get data from past n days
 startdate = days_ago.strftime("%m-%d-%Y")
 enddate = today.strftime("%m-%d-%Y")
 
@@ -209,11 +210,11 @@ print(dt.datetime.now() - startTime)
 ## drop na and save to csv
     
 ex_kli_level_dat = ex_kli_level_dat.dropna(how='all')
-ex_kli_level_dat.to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_KLI_1.csv')
+ex_kli_level_dat.to_csv(outputdir+'Level_data_KLI_raw.csv')
 ex_kli_temp_dat = ex_kli_temp_dat.dropna(how='all')
-ex_kli_temp_dat.to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Temp_data_KLI_1.csv')
+ex_kli_temp_dat.to_csv(outputdir+'Temp_data_KLI_raw.csv')
 ex_kli_cond_dat = ex_kli_cond_dat.dropna(how='all')
-ex_kli_cond_dat.to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Cond_data_KLI_1.csv')
+ex_kli_cond_dat.to_csv(outputdir+'Cond_data_KLI_raw.csv')
     
 #%%
 
@@ -234,10 +235,7 @@ for col in ex_kli_cond_dat:
 #%%
     
 ## Save updated Wood data
-all_level_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_1.csv')
-
-
-all_temp_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Temp_data_1.csv')
-
-
-all_cond_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Cond_data_1.csv')
+## outputdir defined in script that downloads Wood data run it first
+all_level_dat.dropna(how='all').to_csv(outputdir+'Level_data_raw.csv')
+all_temp_dat.dropna(how='all').to_csv(outputdir+'Temp_data_raw.csv')
+all_cond_dat.dropna(how='all').to_csv(outputdir+'Cond_data_raw.csv')

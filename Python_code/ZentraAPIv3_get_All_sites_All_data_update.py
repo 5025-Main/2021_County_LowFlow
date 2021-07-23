@@ -15,20 +15,22 @@ import numpy as np
 startTime = dt.datetime.now()
 
 ## Read in existing data
-ex_level_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_1.csv',index_col=0, parse_dates=True)
+inputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
+## Level
+ex_level_dat = pd.read_csv(+'Level_data_raw.csv',index_col=0, parse_dates=True)
 ex_level_dat = ex_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
-
-ex_temp_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Temp_data_1.csv',index_col=0, parse_dates=True)
+## Temp
+ex_temp_dat = pd.read_csv(inputdir+'Temp_data_raw.csv',index_col=0, parse_dates=True)
 ex_temp_dat = ex_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
-
-ex_cond_dat = pd.read_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Cond_data_1.csv',index_col=0, parse_dates=True)
+## Conductivity
+ex_cond_dat = pd.read_csv(inputdir+'Cond_data_raw.csv',index_col=0, parse_dates=True)
 ex_cond_dat = ex_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
 #%%
 
 ### START/END DATES
 today = dt.datetime.now()
-days_ago = today - dt.timedelta(days=4) ## get data from past 12 days
+days_ago = today - dt.timedelta(days=6) ## get data from past 12 days
 startdate = days_ago.strftime("%m-%d-%Y")
 enddate = today.strftime("%m-%d-%Y")
 
@@ -125,42 +127,11 @@ site_device_dict = {
                   'SWT-030':('06-02256',3),
                   'SWT-049':('06-02285',3)}
 
+
                     
-device_site_dict= {
-                '06-02192':(['CAR-059'],3),
-                '06-02245':(['CAR-070'],3),
-                '06-02351':(['CAR-070E'],3),
-                '06-02301':(['CAR-072'],3),
-                '06-02127':(['CAR-072C'],3),
-                '06-02190':(['CAR-072Q'],3),
-                '06-02298':(['CAR-072R'],3),
-                '06-02290':(['SDG-072'],3),
-                '06-02299':(['SDG-072F'],3),
-                '06-02207':(['SDG-084'],3),
-                '06-02230':(['SDG-084J'],3),
-                '06-02293':(['SDG-085'],3),
-                '06-01630':(['SDG-085G'],3),
-                '06-02235':(['SDG-085M'],3),
-                '06-02199':(['SDR-036'],3),
-                '06-02246':(['SDR-041'],3),
-                '06-02212':(['SDR-064'],3),
-                '06-02229':(['SDR-064A'],3),
-                '06-02203':(['SDR-098'],3),
-                '06-02204':(['SDR-127'],3),
-                '06-02198':(['SDR-130'],3),
-                '06-02255':(['SDR-203A','SDR-204A'],[2,5]),
-                '06-02193':(['SDR-768'],3),
-                '06-02227':(['SLR-045'],3),
-                '06-02210':(['SLR-045A','SLR-045B'],[2,5]),
-                '06-02211':(['SLR-156'],3),
-                '06-02337':(['SLR-160'],3),
-                '06-02219':(['SLR-160A'],3),
-                '06-02256':(['SWT-030'],3),
-                '06-02285':(['SWT-049'],3)}
+# Reorder the dictionary    
+device_site_dict = {value[0]:([key],value[1]) for key, value in site_device_dict.items()}
 
-
-#device_site_dict= {
-#                '06-02192':(['CAR-059'],3)}
 
 
 
@@ -240,10 +211,10 @@ print(dt.datetime.now() - startTime)
 
 #%%
 
-    
-ex_level_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Level_data_1.csv')
-ex_temp_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Temp_data_1.csv')
-ex_cond_dat.dropna(how='all').to_csv('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'+'Cond_data_1.csv')
+outputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
+ex_level_dat.dropna(how='all').to_csv(outputdir+'Level_data_raw.csv')
+ex_temp_dat.dropna(how='all').to_csv(outputdir+'Temp_data_raw.csv')
+ex_cond_dat.dropna(how='all').to_csv(outputdir+'Cond_data_raw.csv')
     
     
     
