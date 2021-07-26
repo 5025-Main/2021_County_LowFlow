@@ -19,7 +19,8 @@ inputdir = maindir + 'PowerBI/County2021/Flow_data_from_API_v3/'
 ## Read in existing data
 raw_level_dat = pd.read_csv(inputdir+'Level_data_raw.csv',index_col=0, parse_dates=True)
 raw_level_dat = raw_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
-qc_level_dat = raw_level_dat
+qc_level_dat = pd.DataFrame(index = raw_level_dat.index) #copy
+qc_flow_dat = pd.DataFrame(index = raw_level_dat.index) #copy
 
 ex_temp_dat = pd.read_csv(inputdir+'Temp_data_raw.csv',index_col=0, parse_dates=True)
 ex_temp_dat = ex_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
@@ -58,6 +59,9 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
             ## insert each offset value to Offset column
             offset_range = (WL.index > spec_offset.Start) & (WL.index <= spec_offset.End)
             WL.loc[offset_range, ['spec_offset']] = spec_offset.SpecialOffset_in
+            ## Apply all offsets for unique shifts due to bad data or other issues
+            WL['Level_spec_off'] = WL[site_name+'_level_in'] + WL['spec_offset']
+            WL['Level_spec_off'] = WL['Level_spec_off'].round(2)
         else:
             pass
         print ('')   
@@ -105,7 +109,7 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
     
 ### Calculate Flow
     a, b = site_list.loc['MS4-'+site_name]['alpha'], site_list.loc['MS4-'+site_name]['beta']
-    WL['Flow_gpm'] = a *  WL['Level_in']^b
+    WL['Flow_gpm'] = a *  WL['Level_in']**b
     
 
 #### Clip stormflow data from Flow gpm
@@ -131,8 +135,8 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
             print ('No data to clip...')
             pass   
         
-    qc_level_data.loc[:,site_name+'_level_in'] = WL.loc[:,'Level_in']
-    
+    qc_level_dat.loc[:,site_name+'_level_in'] = WL.loc[:,'Level_in']
+    qc_flow_dat.loc[:,site_name+'_flow_gpm'] = WL.loc[:,'Flow_gpm_storm_clipped']
     
     
     
@@ -141,6 +145,6 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
     
 #%%
     
-qc_level_data.to_csv(outputdir + 'Level_data_qc.csv')
-    
+qc_level_dat.to_csv(outputdir + 'Level_data_qc.csv')
+qc_flow_dat.to_csv(outputdir + 'Flow_data_qc.csv')  
     
