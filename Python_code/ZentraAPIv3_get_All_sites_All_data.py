@@ -96,7 +96,8 @@ site_device_dict = {'CAR-059':('06-02192',3),
                   'SWT-030':('06-02256',3),
                   'SWT-049':('06-02285',3)}
 
-site_device_dict = {'SDG-085G':('06-01630',3)}
+site_device_dict = {'SLR-045A':('06-02210',2),
+                  'SLR-045B':('06-02210',5)}
 
 
                     
@@ -121,9 +122,11 @@ level_dat = pd.DataFrame(index=pd.date_range(dt.datetime(2021,5,5,0,0),dt.dateti
 temp_dat = pd.DataFrame(index=pd.date_range(dt.datetime(2021,5,5,0,0),dt.datetime(2021,9,16,0,0),freq='5Min'))
 cond_dat = pd.DataFrame(index=pd.date_range(dt.datetime(2021,5,5,0,0),dt.datetime(2021,9,16,0,0),freq='5Min'))
 ## iterate over loggers, can get 60 loggers in 1 min from API or else throttled and have to wait 1min
-for device_sn, (site_s, port_s) in device_site_dict.items():
+for site, (device_sn, port_s) in site_device_dict.items():
     print()
+    print ('Site: '+site)
     print ('Device: '+device_sn)
+    print ('Port: '+str(port_s))
     
     ### API PARAMS
     token = "Token {TOKEN}".format(TOKEN="5570f23feeb666615003051140cea73ccdb18639")
@@ -159,20 +162,19 @@ for device_sn, (site_s, port_s) in device_site_dict.items():
             length_data = 0
     
     ## For each logger, if multiple sites then iterate over sites
-    for site in site_s:
-        port_num = site_device_dict[site][1]
-        print ('Saving data for...')
-        print (site, port_num)
-        
-        site_data = device_dat[device_dat['port_num']==port_num]
-        
-        site_level_data = site_data[site_data['measurement']=='Water Level']      [['datetime','mrid', 'measurement','value', 'units']]
-        site_temp_data = site_data[site_data['measurement']=='Water Temperature'] [['datetime','mrid', 'measurement','value', 'units']]
-        site_cond_data = site_data[site_data['measurement']=='EC']                [['datetime','mrid', 'measurement','value', 'units']]
+
+    print ('Saving data for...')
+    print (site, port_s)
     
-        level_dat[site+'_level_in'] = site_level_data.drop_duplicates(subset=['datetime']).dropna(how='all')['value']
-        temp_dat[site+'_temp_F'] = site_temp_data.drop_duplicates(subset=['datetime']).dropna(how='all')['value']
-        cond_dat[site+'_cond_mScm'] = site_cond_data.drop_duplicates(subset=['datetime']).dropna(how='all')['value']
+    site_data = device_dat[device_dat['port_num']==port_s]
+    
+    site_level_data = site_data[site_data['measurement']=='Water Level']      [['datetime','mrid', 'measurement','value', 'units']]
+    site_temp_data = site_data[site_data['measurement']=='Water Temperature'] [['datetime','mrid', 'measurement','value', 'units']]
+    site_cond_data = site_data[site_data['measurement']=='EC']                [['datetime','mrid', 'measurement','value', 'units']]
+
+    level_dat[site+'_level_in'] = site_level_data.drop_duplicates(subset=['datetime']).dropna(how='all')['value']
+    temp_dat[site+'_temp_F'] = site_temp_data.drop_duplicates(subset=['datetime']).dropna(how='all')['value']
+    cond_dat[site+'_cond_mScm'] = site_cond_data.drop_duplicates(subset=['datetime']).dropna(how='all')['value']
     
     
 #Python 3: 
@@ -185,9 +187,9 @@ temp_dat = temp_dat.replace(1121.6, np.nan)
 cond_dat = cond_dat.replace(3.4197944250000004e+62, np.nan) 
     
 outputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
-level_dat.to_csv(outputdir+'Level_data_SDG_085G.csv')
-temp_dat.to_csv(outputdir+'Temp_data_SDG_085G.csv')
-cond_dat.to_csv(outputdir+'Cond_data_SDG_085G.csv')
+level_dat.to_csv(outputdir+'Level_data_SLR-045AB.csv')
+temp_dat.to_csv(outputdir+'Temp_data_SLR-045AB.csv')
+cond_dat.to_csv(outputdir+'Cond_data_SLR-045AB.csv')
     
     
     

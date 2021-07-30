@@ -109,7 +109,7 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
     
 ### Calculate Flow
     a, b = site_list.loc['MS4-'+site_name]['alpha'], site_list.loc['MS4-'+site_name]['beta']
-    WL['Flow_gpm'] = a *  WL['Level_in']**b
+    WL['Flow_gpm'] = a *  (WL['Level_in']/12.)**b ## stage in ft for this equation
     
 
 #### Clip stormflow data from Flow gpm
@@ -131,11 +131,12 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
             print ('Clipped storm data from: '+clip_start.strftime('%m/%d/%y %H:%M')+'-'+clip_end.strftime('%m/%d/%y %H:%M'))
             ## set data in WL indices to nan
             WL.loc[clip_start:clip_end, ['Flow_gpm_storm_clipped']] = np.nan
+            WL.loc[clip_start:clip_end, ['Level_spec_off_clipbad_calc_off_glob_off']] = np.nan
         else:
             print ('No data to clip...')
             pass   
         
-    qc_level_dat.loc[:,site_name+'_level_in'] = WL.loc[:,'Level_in']
+    qc_level_dat.loc[:,site_name+'_level_in'] = WL.loc[:,'Level_spec_off_clipbad_calc_off_glob_off']
     qc_flow_dat.loc[:,site_name+'_flow_gpm'] = WL.loc[:,'Flow_gpm_storm_clipped']
     
     
@@ -144,7 +145,8 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
     
     
 #%%
-    
+outputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
+   
 qc_level_dat.to_csv(outputdir + 'Level_data_qc.csv')
 qc_flow_dat.to_csv(outputdir + 'Flow_data_qc.csv')  
     

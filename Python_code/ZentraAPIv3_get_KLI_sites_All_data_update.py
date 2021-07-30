@@ -16,24 +16,24 @@ startTime = dt.datetime.now()
 
 ## Read in existing Wood data
 ## inputdir is defined in the script that downloads Wood data, make sure to run that one first
-all_level_dat = pd.read_csv(inputdir+'Level_data_1.csv',index_col=0, parse_dates=True)
+all_level_dat = pd.read_csv(inputdir+'Level_data_raw.csv',index_col=0, parse_dates=True)
 all_level_dat = all_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-all_temp_dat = pd.read_csv(inputdir+'Temp_data_1.csv',index_col=0, parse_dates=True)
+all_temp_dat = pd.read_csv(inputdir+'Temp_data_raw.csv',index_col=0, parse_dates=True)
 all_temp_dat = all_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-all_cond_dat = pd.read_csv(inputdir+'Cond_data_1.csv',index_col=0, parse_dates=True)
+all_cond_dat = pd.read_csv(inputdir+'Cond_data_raw.csv',index_col=0, parse_dates=True)
 all_cond_dat = all_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
 #%%
 ## Read in existing KLI data
-ex_kli_level_dat = pd.read_csv(inputdir+'Level_data_KLI_1.csv',index_col=0, parse_dates=True)
+ex_kli_level_dat = pd.read_csv(inputdir+'Level_data_KLI_raw.csv',index_col=0, parse_dates=True)
 ex_kli_level_dat = ex_kli_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-ex_kli_temp_dat = pd.read_csv(inputdir+'Temp_data_KLI_1.csv',index_col=0, parse_dates=True)
+ex_kli_temp_dat = pd.read_csv(inputdir+'Temp_data_KLI_raw.csv',index_col=0, parse_dates=True)
 ex_kli_temp_dat = ex_kli_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
-ex_kli_cond_dat = pd.read_csv(inputdir+'Cond_data_KLI_1.csv',index_col=0, parse_dates=True)
+ex_kli_cond_dat = pd.read_csv(inputdir+'Cond_data_KLI_raw.csv',index_col=0, parse_dates=True)
 ex_kli_cond_dat = ex_kli_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 
 #%%
@@ -48,7 +48,7 @@ enddate = today.strftime("%m-%d-%Y")
 startdate = ex_kli_level_dat.dropna(how='all').index[-1].strftime("%m-%d-%Y")
 
 # or hardcode start/end
-#startdate = '06-3-2021'
+#startdate = '07-24-2021'
 #enddate = '05-13-2021'
 
 #%%

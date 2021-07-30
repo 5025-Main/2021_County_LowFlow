@@ -17,7 +17,7 @@ startTime = dt.datetime.now()
 ## Read in existing data
 inputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
 ## Level
-ex_level_dat = pd.read_csv(+'Level_data_raw.csv',index_col=0, parse_dates=True)
+ex_level_dat = pd.read_csv(inputdir+'Level_data_raw.csv',index_col=0, parse_dates=True)
 ex_level_dat = ex_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
 ## Temp
 ex_temp_dat = pd.read_csv(inputdir+'Temp_data_raw.csv',index_col=0, parse_dates=True)
@@ -38,7 +38,7 @@ enddate = today.strftime("%m-%d-%Y")
 startdate = ex_level_dat.dropna(how='all').index[-1].strftime("%m-%d-%Y")
 
 # or hardcode start/end
-#startdate = '06-3-2021'
+#startdate = '07-24-2021'
 #enddate = '05-13-2021'
 
 #%%
@@ -132,6 +132,10 @@ site_device_dict = {
 # Reorder the dictionary    
 device_site_dict = {value[0]:([key],value[1]) for key, value in site_device_dict.items()}
 
+
+## replace dict entries for devices with 2 probes plugged in
+device_site_dict['06-02255'] = (['SDR-203A','SDR-204A'],[2,5])
+device_site_dict['06-02210'] = (['SLR-045A','SLR-045B'],[2,5])
 
 
 
