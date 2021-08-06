@@ -106,6 +106,7 @@ for site_name in site_list[site_list['Consultant']=='Wood'].index:
     WL['Level_spec_off_clipbad_calc_off_glob_off'] = WL['Level_spec_off_clipbad_calc_off'] + glob_offset
     ## Final, offset and cleaned water level data for flow calculation
     WL['Level_in'] = WL['Level_spec_off_clipbad_calc_off_glob_off']
+    WL['Level_in'] = WL['Level_in'].where(WL['Level_in'] >= 0., 0.) ## if negative 
     
 ### Calculate Flow
     a, b = site_list.loc['MS4-'+site_name]['alpha'], site_list.loc['MS4-'+site_name]['beta']

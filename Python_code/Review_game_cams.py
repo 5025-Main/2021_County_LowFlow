@@ -13,8 +13,9 @@ from scipy import ndimage
 #from PIL import Image
 import piexif
 
-site_name = 'SWT-049'
-pic_start_time = dt.datetime(2021,6,4,10,0)
+site_name = 'SLR-045'
+
+pic_start_time = dt.datetime(2021,7,1,0,0)
 
 maindir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/'
 ## Local file

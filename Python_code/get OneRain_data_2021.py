@@ -30,8 +30,9 @@ Rain_gauge_names = Rain_gauge_info.index.unique()
 
 ######### UPDATE HERE ###################
 #start_date, end_date = '2021-05-01', '2020-06-29' 
-start_date, end_date = '2021-06-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
+start_date, end_date = '2021-07-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
 time_bin  = '3600' #seconds. Daily=86400, Hourly=3600
+month = 'July' # name for folder
 #######################################
 
 
@@ -116,8 +117,8 @@ for Rain_gauge_name in Rain_gauge_names:
                     rain_data_1hr = rain_data_df.resample('1H').sum().fillna(0.) 
                     rain_data_1D = rain_data_df.resample('D').sum()
                     
-                    rain_data_1hr.to_csv(maindir+'Rain_data/'+Rain_gauge_name+'_hourly.csv')
-                    rain_data_1D.to_csv(maindir+'Rain_data/'+Rain_gauge_name+'_daily.csv')
+                    rain_data_1hr.to_csv(maindir+'Rain_data/'+month+' rain data/'+Rain_gauge_name+'_hourly.csv')
+                    rain_data_1D.to_csv(maindir+'Rain_data/'+month+' rain data/'+Rain_gauge_name+'_daily.csv')
             except Exception as e:
                print (e)
                pass
@@ -139,7 +140,7 @@ for Rain_gauge_name in Rain_gauge_names:
 
 raindir = maindir+'Rain_data/'
 
-for current_fname in os.listdir('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/Rain_data/May rain data'):
+for current_fname in os.listdir('C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/Rain_data/'+month+' rain data'):
     print (current_fname)
     rain_current = pd.DataFrame(columns=['Rain_in'])
     for folder in [x[0] for x in os.walk(raindir)]:
@@ -168,8 +169,8 @@ raindir = maindir+'Rain_data/'
 #for all gauges
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 #for one gauge
-gauge_name = 'Fallbrook'
-rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True and f.startswith(gauge_name)==True]
+#gauge_name = 'Fallbrook'
+#rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True and f.startswith(gauge_name)==True]
 #rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 
 fig, ax = plt.subplots(1,1,figsize=(12,8))
