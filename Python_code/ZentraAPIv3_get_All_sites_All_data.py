@@ -96,9 +96,10 @@ site_device_dict = {'CAR-059':('06-02192',3),
                   'SWT-030':('06-02256',3),
                   'SWT-049':('06-02285',3)}
 
-site_device_dict = {'SLR-045A':('06-02210',2),
-                  'SLR-045B':('06-02210',5)}
+#site_device_dict = {'SLR-045A':('06-02210',2),
+#                  'SLR-045B':('06-02210',5)}
 
+site_device_dict = {'SDG-085G':('06-01630',3)}
 
                     
 # Reorder the dictionary    
@@ -114,8 +115,8 @@ startdate = days_ago.strftime("%m-%d-%Y")
 enddate = today.strftime("%m-%d-%Y")
 
 # or hardcode start/end
-startdate = '05-5-2021'
-#enddate = '05-14-2021'
+startdate = '07-31-2021'
+enddate = '08-6-2021'
 
 ## Empty dataframe for data
 level_dat = pd.DataFrame(index=pd.date_range(dt.datetime(2021,5,5,0,0),dt.datetime(2021,9,16,0,0),freq='5Min'))
@@ -187,9 +188,9 @@ temp_dat = temp_dat.replace(1121.6, np.nan)
 cond_dat = cond_dat.replace(3.4197944250000004e+62, np.nan) 
     
 outputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
-level_dat.to_csv(outputdir+'Level_data_SLR-045AB.csv')
-temp_dat.to_csv(outputdir+'Temp_data_SLR-045AB.csv')
-cond_dat.to_csv(outputdir+'Cond_data_SLR-045AB.csv')
+level_dat.dropna().to_csv(outputdir+'Level_data_SDG-085G.csv')
+temp_dat.dropna().to_csv(outputdir+'Temp_data_SDG-085G.csv')
+cond_dat.dropna().to_csv(outputdir+'Cond_data_SDG-085G.csv')
     
     
     

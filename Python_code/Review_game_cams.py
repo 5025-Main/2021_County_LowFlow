@@ -13,7 +13,7 @@ from scipy import ndimage
 #from PIL import Image
 import piexif
 
-site_name = 'SLR-045'
+site_name = 'SWT-049'
 
 pic_start_time = dt.datetime(2021,7,1,0,0)
 
@@ -60,6 +60,8 @@ print ('datetimes and picture file names....DONE'   )
 # Limit to dates with water level
 pic_datetimes = pic_datetimes.sort_index()
 pic_datetimes = pic_datetimes.loc[WL.index[0]:WL.index[-1],:]
+# Drop duplicates
+pic_datetimes = pic_datetimes.drop_duplicates(subset='Date Taken')
 
 # define your images to be plotted
 #pics = [os.listdir(pic_dir+pic_folder)][0][5000:] ## You can limit photos here

@@ -134,6 +134,7 @@ cond_dat = pd.DataFrame(index=pd.date_range(startdate,enddate,freq='5Min'))
 for device_sn, (site_s, port_s) in device_site_dict.items():
     print()
     print ('Device: '+device_sn)
+    print ('Site: '+site_s[0])
     
     ### API PARAMS
     #token = "Token {TOKEN}".format(TOKEN="5570f23feeb666615003051140cea73ccdb18639") ## Wood token
