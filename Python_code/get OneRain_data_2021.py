@@ -30,9 +30,9 @@ Rain_gauge_names = Rain_gauge_info.index.unique()
 
 ######### UPDATE HERE ###################
 #start_date, end_date = '2021-05-01', '2020-06-29' 
-start_date, end_date = '2021-07-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
+start_date, end_date = '2021-08-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
 time_bin  = '3600' #seconds. Daily=86400, Hourly=3600
-month = 'July' # name for folder
+month = 'August' # name for folder
 #######################################
 
 
@@ -169,9 +169,9 @@ raindir = maindir+'Rain_data/'
 #for all gauges
 rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
 #for one gauge
-#gauge_name = 'Fallbrook'
+gauge_name = 'Rancho Bernardo'
 #rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True and f.startswith(gauge_name)==True]
-#rain_files = [f for f in os.listdir(maindir+'Rain_data/') if f.endswith('hourly.csv')==True]
+
 
 fig, ax = plt.subplots(1,1,figsize=(12,8))
 
