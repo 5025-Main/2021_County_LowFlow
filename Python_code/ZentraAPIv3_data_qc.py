@@ -18,15 +18,15 @@ inputdir = maindir + 'PowerBI/County2021/Flow_data_from_API_v3/'
 
 ## Read in existing data
 raw_level_dat = pd.read_csv(inputdir+'Level_data_raw.csv',index_col=0, parse_dates=True)
-raw_level_dat = raw_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
+raw_level_dat = raw_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,22,0,0),freq='5Min'))
 qc_level_dat = pd.DataFrame(index = raw_level_dat.index) #copy
 qc_flow_dat = pd.DataFrame(index = raw_level_dat.index) #copy
 
 ex_temp_dat = pd.read_csv(inputdir+'Temp_data_raw.csv',index_col=0, parse_dates=True)
-ex_temp_dat = ex_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
+ex_temp_dat = ex_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,22,0,0),freq='5Min'))
 
 ex_cond_dat = pd.read_csv(inputdir+'Cond_data_raw.csv',index_col=0, parse_dates=True)
-ex_cond_dat = ex_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
+ex_cond_dat = ex_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,22,0,0),freq='5Min'))
 
 
 

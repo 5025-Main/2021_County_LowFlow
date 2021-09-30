@@ -25,17 +25,17 @@ Rain_gauge_info = pd.read_csv(maindir+'Ancillary_files/Rain_gauge_info.csv',inde
 Rain_gauge_names = Rain_gauge_info.index.unique()
 
 ## one site
-Rain_gauge_names = ['Los Coches']
+#Rain_gauge_names = ['Los Coches']
 
 
 ## Run this block to get the current month's data. then manually move it to "Month rain data" folder
 ## Block below will go through all folders and combine monthly rainfall data
 
 ######### UPDATE HERE ###################
-start_date, end_date = '2021-08-01', '2021-09-01' 
+start_date, end_date = '2021-09-01', '2021-09-16' 
 #start_date, end_date = '2021-08-01', dt.date.today().strftime('%Y-%m-%d') ## for current day: dt.date.today().strftime('%Y-%m-%d')
 time_bin  = '3600' #seconds. Daily=86400, Hourly=3600
-month = 'August' # name for folder
+month = 'September' # name for folder
 #######################################
 
 

@@ -18,13 +18,13 @@ startTime = dt.datetime.now()
 inputdir = 'C:/Users/alex.messina/Documents/GitHub/2021_County_LowFlow/PowerBI/County2021/Flow_data_from_API_v3/'
 ## Level
 ex_level_dat = pd.read_csv(inputdir+'Level_data_raw.csv',index_col=0, parse_dates=True)
-ex_level_dat = ex_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
+ex_level_dat = ex_level_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,22,0,0),freq='5Min'))
 ## Temp
 ex_temp_dat = pd.read_csv(inputdir+'Temp_data_raw.csv',index_col=0, parse_dates=True)
-ex_temp_dat = ex_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
+ex_temp_dat = ex_temp_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,22,0,0),freq='5Min'))
 ## Conductivity
 ex_cond_dat = pd.read_csv(inputdir+'Cond_data_raw.csv',index_col=0, parse_dates=True)
-ex_cond_dat = ex_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,16,0,0),freq='5Min'))
+ex_cond_dat = ex_cond_dat.reindex(pd.date_range(dt.datetime(2021,5,1),dt.datetime(2021,9,22,0,0),freq='5Min'))
 
 #%%
 
